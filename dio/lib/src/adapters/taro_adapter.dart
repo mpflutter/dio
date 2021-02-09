@@ -26,8 +26,9 @@ class TaroHttpClientAdapter implements HttpClientAdapter {
   @override
   Future<ResponseBody> fetch(RequestOptions options,
       Stream<List<int>> requestStream, Future cancelFuture) async {
-    var bytes =
-        await requestStream.reduce((a, b) => Uint8List.fromList([...a, ...b]));
+    var bytes = requestStream != null
+        ? await requestStream.reduce((a, b) => Uint8List.fromList([...a, ...b]))
+        : null;
 
     var completer = Completer<ResponseBody>();
 
